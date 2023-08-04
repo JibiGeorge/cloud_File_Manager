@@ -1,6 +1,9 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import SearchBar from "../components/SearchBar";
+import FolderList from "../components/Folder/FolderList";
+import FileList from "../components/File/FileList";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -13,5 +16,11 @@ export default function Home() {
       console.log("session", session.user);
     }
   }, [session]);
-  return <h1>Cloud File Manager</h1>;
+  return (
+    <div className="p-5">
+      <SearchBar/>
+      <FolderList/>
+      <FileList/>
+    </div>
+  )
 }
