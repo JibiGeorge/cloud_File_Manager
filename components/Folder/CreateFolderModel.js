@@ -4,10 +4,15 @@ import { app } from "../../config/firebaseConfig";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { ShowToastContext } from "../../context/showToastContext";
+import { ParentFolderIdContext } from "../../context/ParentFolderIdContext";
 
 const CreateFolderModel = () => {
   const [folderName, setFolderName] = useState();
-  const {showToastMessage, setToastMessage} = useContext(ShowToastContext)
+  const { showToastMessage, setToastMessage } = useContext(ShowToastContext);
+  const { parentFolderID, setParentFolderID } = useContext(
+    ParentFolderIdContext
+  );
+
   const { data: session } = useSession();
   const db = getFirestore(app);
 
@@ -17,8 +22,9 @@ const CreateFolderModel = () => {
         name: folderName,
         id: Date.now().toString(),
         createdBy: session.user.email,
+        parentFolderID: parentFolderID,
       });
-      setToastMessage("Folder Created")
+      setToastMessage("Folder Created");
     } catch (error) {
       console.log("error", error);
     }
@@ -39,7 +45,7 @@ const CreateFolderModel = () => {
           />
           <button
             className="bg-blue-500 text-white rounded-md p-2 px-3 w-full"
-            onClick={()=>onCreate()}
+            onClick={() => onCreate()}
           >
             Create
           </button>
