@@ -1,3 +1,4 @@
+import CreateFolderModel from "../components/Folder/CreateFolderModel";
 import SideNavBar from "../components/SideNavBar";
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -11,7 +12,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <div className="col-span-2">
             <Component {...pageProps} />
           </div>
-        <div className="bg-white p-5">Storage</div>
+          <div className="bg-white p-5">Storage</div>
         </div>
       </div>
     </SessionProvider>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import menu from "../data/menu";
+import CreateFolderModel from "./Folder/CreateFolderModel";
 
 const SideNavBar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -27,7 +28,10 @@ const SideNavBar = () => {
         </svg>
         Add New File
       </button>
-      <button className="flex gap-2 items-center bg-sky-400 py-2 text-white rounded-md px-3 hover:scale-105 transition-all mt-1 w-full text-[13px]">
+      <button
+        className="flex gap-2 items-center bg-sky-400 py-2 text-white rounded-md px-3 hover:scale-105 transition-all mt-1 w-full text-[13px]"
+        onClick={() => window.my_modal_3.showModal()}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -45,11 +49,14 @@ const SideNavBar = () => {
         New Folder
       </button>
 
-      <div>
+      <div className="mt-7">
         {menu.list.map((item, index) => (
-          <h2 
-          onClick={()=> setActiveIndex(index)}
-          className={`flex gap-2 items-center p-2 mt-3 text-gray-500 hover:bg-blue-400 hover:text-white rounded-md cursor-pointer transition-all ${activeIndex == index ? 'bg-blue-500 text-blue-50' : null}`}>
+          <h2
+            onClick={() => setActiveIndex(index)}
+            className={`flex gap-2 items-center p-2 mt-3 text-gray-500 hover:bg-blue-400 hover:text-white rounded-md cursor-pointer transition-all ${
+              activeIndex == index ? "bg-blue-500 text-blue-50" : null
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -68,6 +75,9 @@ const SideNavBar = () => {
           </h2>
         ))}
       </div>
+      <dialog id="my_modal_3" className="modal">
+        <CreateFolderModel />
+      </dialog>
     </div>
   );
 };
