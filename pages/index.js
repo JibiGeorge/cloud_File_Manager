@@ -22,6 +22,7 @@ export default function Home() {
   const db = getFirestore(app);
 
   const [folderList, setFolderList] = useState([]);
+  const [fileList, seFileList] = useState([]);
   const {parentFolderID, setParentFolderID} = useContext(ParentFolderIdContext);
 
 
@@ -30,6 +31,7 @@ export default function Home() {
       router.push("/login");
     } else {
       getFolderList();
+      getFilesList();
       console.log("session", session.user);
     }
     setParentFolderID(0)
@@ -48,11 +50,25 @@ export default function Home() {
       setFolderList((folderList) => [...folderList, doc.data()]);
     });
   };
+
+  const getFilesList = async () => {
+    seFileList([])
+    const q = query(
+      collection(db, "files"),
+      where("createdBy", "==", session.user.email)
+    );
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, "=>", doc.data());
+      seFileList((fileList) => [...fileList, doc.data()]);
+    });
+  };
   return (
     <div className="p-5">
       <SearchBar />
       <FolderList folderList={folderList} />
-      <FileList />
+      <FileList fileList={fileList}/>
     </div>
   );
 }

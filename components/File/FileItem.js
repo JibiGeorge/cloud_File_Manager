@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 import Image from "next/image";
 import React from "react";
 
@@ -21,12 +22,11 @@ const FileItem = ({ file }) => {
       </div>
       <div className="grid grid-cols-3 place-content-start">
         <h2 className="text-[15px]">
-          {/* {moment(file.modifiedAt).format("MMMM DD, YYYY")} */}
-          {/* {moment(file.modifiedAt).format("MMMM DD, YYYY")} */}
+          {moment(file.modifiedAt).format("MMMM DD, YYYY")}
         </h2>
 
         <h2 className="text-[15px]">
-          {/* {(file.size / 1024 ** 2).toFixed(2) + " MB"} */}
+          {(file.size / 1024 ** 2).toFixed(2) + " MB"}
           {file.size}
           <svg
             xmlns="http://www.w3.org/2000/svg"
