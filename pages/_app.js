@@ -6,6 +6,7 @@ import { ShowToastContext } from "../context/showToastContext";
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ParentFolderIdContext } from "../context/ParentFolderIdContext";
+import Storage from "../components/Storage/Storage";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [showToastMessage, setToastMessage] = useState();
@@ -24,7 +25,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
               <div className="col-span-2">
                 <Component {...pageProps} />
               </div>
-              <div className="bg-white p-5">Storage</div>
+              <div className="bg-white p-5 order-first md:order-last">
+                <Storage/>
+              </div>
             </div>
           </div>
           {showToastMessage ? <Toast message={showToastMessage} /> : null}
