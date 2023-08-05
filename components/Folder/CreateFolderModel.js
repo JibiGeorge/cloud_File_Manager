@@ -1,22 +1,24 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { app } from "../../config/firebaseConfig";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { useSession } from "next-auth/react";
+import { ShowToastContext } from "../../context/showToastContext";
 
 const CreateFolderModel = () => {
   const [folderName, setFolderName] = useState();
+  const {showToastMessage, setToastMessage} = useContext(ShowToastContext)
   const { data: session } = useSession();
   const db = getFirestore(app);
 
-  const onCreate = async (e) => {
-    e.preventDefault();
+  const onCreate = async () => {
     try {
       await setDoc(doc(db, "Folders", Date.now().toString()), {
         name: folderName,
         id: Date.now().toString(),
         createdBy: session.user.email,
       });
+      setToastMessage("Folder Created")
     } catch (error) {
       console.log("error", error);
     }
@@ -37,7 +39,7 @@ const CreateFolderModel = () => {
           />
           <button
             className="bg-blue-500 text-white rounded-md p-2 px-3 w-full"
-            onClick={onCreate}
+            onClick={()=>onCreate()}
           >
             Create
           </button>
