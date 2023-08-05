@@ -1,10 +1,26 @@
 import Image from "next/image";
 import React, { useState } from "react";
+import { app } from "../../config/firebaseConfig";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { useSession } from "next-auth/react";
 
 const CreateFolderModel = () => {
   const [folderName, setFolderName] = useState();
+  const { data: session } = useSession();
+  const db = getFirestore(app);
 
-  const onCreate = () => {};
+  const onCreate = async (e) => {
+    e.preventDefault();
+    try {
+      await setDoc(doc(db, "Folders", Date.now().toString()), {
+        name: folderName,
+        id: Date.now().toString(),
+        createdBy: session.user.email,
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <div>
       <form method="dialog" className="modal-box p-9 items-center bg-white">
@@ -21,7 +37,7 @@ const CreateFolderModel = () => {
           />
           <button
             className="bg-blue-500 text-white rounded-md p-2 px-3 w-full"
-            onClick={() => onCreate}
+            onClick={onCreate}
           >
             Create
           </button>
