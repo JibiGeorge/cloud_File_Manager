@@ -26,6 +26,7 @@ const UploadFileModal = ({ closeModal }) => {
       .then((res) => {
         getDownloadURL(fileRef).then(async (download) => {
           await setDoc(doc(db, "files", Date.now().toString()), {
+            id: Date.now().toString(),
             name: file.name,
             type: file.name.split(".")[1],
             size: file.size,

@@ -1,37 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import FileItem from "./FileItem";
+import { deleteDoc, doc, getFirestore } from "firebase/firestore";
+import { app } from "../../config/firebaseConfig";
+import { ShowToastContext } from "../../context/showToastContext";
 
-const FileList = ({fileList}) => {
-  // const fileList = [
-  //   {
-  //     id: 1,
-  //     name: "UX Principal.docx",
-  //     type: "doc",
-  //     size: "6272 kB",
-  //     modifiedAt: "Nov 23,2020",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Data Structure.pdf",
-  //     type: "pdf",
-  //     size: "672 kB",
-  //     modifiedAt: "Nov 23,2022",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "smaple Image.png",
-  //     type: "image",
-  //     size: "400 kB",
-  //     modifiedAt: "Nov 23,2023",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "React Principal.docx",
-  //     type: "doc",
-  //     size: "6272 kB",
-  //     modifiedAt: "Nov 23,2020",
-  //   },
-  // ];
+const FileList = ({ fileList }) => {
+  const db = getFirestore(app);
+  const { showToastMessage, setToastMessage } = useContext(ShowToastContext);
+
+  const deleteFile = async (item) => {
+    console.log("item", item);
+    await deleteDoc(doc(db, "files", item.id.toString())).then((response) => {
+      setToastMessage("File Deleted");
+    });
+  };
   return (
     <div
       className="bg-white mt-5 p-5
@@ -57,7 +39,7 @@ const FileList = ({fileList}) => {
       </div>
       {fileList &&
         fileList.map((item, index) => (
-          <div key={index}>
+          <div key={index} onClick={() => deleteFile(item)}>
             <FileItem file={item} key={index} />
           </div>
         ))}

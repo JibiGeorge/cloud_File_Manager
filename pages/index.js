@@ -23,8 +23,10 @@ export default function Home() {
 
   const [folderList, setFolderList] = useState([]);
   const [fileList, seFileList] = useState([]);
-  const {parentFolderID, setParentFolderID} = useContext(ParentFolderIdContext);
-
+  const { parentFolderID, setParentFolderID } = useContext(
+    ParentFolderIdContext
+  );
+  const { showToastMessage, setToastMessage } = useContext(ShowToastContext);
 
   useEffect(() => {
     if (!session) {
@@ -34,11 +36,11 @@ export default function Home() {
       getFilesList();
       console.log("session", session.user);
     }
-    setParentFolderID(0)
-  }, [session]);
+    setParentFolderID(0);
+  }, [session, showToastMessage]);
 
   const getFolderList = async () => {
-    setFolderList([])
+    setFolderList([]);
     const q = query(
       collection(db, "Folders"),
       where("createdBy", "==", session.user.email)
@@ -52,7 +54,7 @@ export default function Home() {
   };
 
   const getFilesList = async () => {
-    seFileList([])
+    seFileList([]);
     const q = query(
       collection(db, "files"),
       where("createdBy", "==", session.user.email)
@@ -68,7 +70,7 @@ export default function Home() {
     <div className="p-5">
       <SearchBar />
       <FolderList folderList={folderList} />
-      <FileList fileList={fileList}/>
+      <FileList fileList={fileList} />
     </div>
   );
 }
