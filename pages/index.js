@@ -67,7 +67,7 @@ export default function Home() {
       seFileList((fileList) => [...fileList, doc.data()]);
     });
   };
-  return (
+  return session && (
     <div className="p-5">
       <SearchBar />
       <FolderList folderList={folderList} />

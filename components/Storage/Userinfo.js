@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 
@@ -22,7 +22,7 @@ const Userinfo = () => {
               {session.user.email}
             </h2>
           </div>
-          <div className="bg-blue-200 p-2 rounded-lg cursor-pointer">
+          <div className="bg-blue-200 p-2 rounded-lg cursor-pointer" onClick={()=>signOut()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

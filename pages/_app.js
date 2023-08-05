@@ -19,18 +19,19 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <ShowToastContext.Provider
           value={{ showToastMessage, setToastMessage }}
         >
-          <div className="flex bg-[#f0f8ff]">
+          <div className="flex">
             <SideNavBar />
-            <div className="grid grid-cols-1 md:grid-cols-3 w-full">
-              <div className="col-span-2">
+            <div
+              className="grid grid-cols-1
+        md:grid-cols-3 w-full"
+            >
+              <div className="col-span-2 w-full">
                 <Component {...pageProps} />
               </div>
-              <div className="bg-white p-5 order-first md:order-last">
-                <Storage/>
-              </div>
+                <Storage />
             </div>
           </div>
-          {showToastMessage ? <Toast message={showToastMessage} /> : null}
+          {showToastMessage ? <Toast msg={showToastMessage} /> : null}
         </ShowToastContext.Provider>
       </ParentFolderIdContext.Provider>
     </SessionProvider>
